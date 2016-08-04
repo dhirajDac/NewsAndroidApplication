@@ -1,5 +1,6 @@
 package com.vodafone.com.myapplication;
 
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,7 +56,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),"Click Position"+position,Toast.LENGTH_SHORT).show();
+               // Toast.makeText(view.getContext(),"Click Position"+position,Toast.LENGTH_SHORT).show();
+                     NewsDetailActivity.start(view.getContext(),position);
+
             }
         });
         Glide.with(holder.newsImage.getContext()).load((currentNewsObject.getImageUrl())).into(holder.newsImage);

@@ -80,8 +80,10 @@ public class NewsDetailActivity extends AppCompatActivity {
     }
     public static void start(Context context, int position)
     {
-        Intent intent=new Intent(context,NewsDetailActivity.class);
+        Intent intent=new Intent(context,MainActivity.class);
         intent.putExtra("position",position);
         context.startActivity(intent);
     }
+
+
 }

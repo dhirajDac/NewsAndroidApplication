@@ -1,5 +1,7 @@
 package com.vodafone.com.myapplication;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +14,7 @@ import com.vodafone.com.myapplication.objects.Article;
 import com.vodafone.com.myapplication.objects.CommonUsage;
 import com.vodafone.com.myapplication.objects.NewsApiArticleReference;
 import com.vodafone.com.myapplication.objects.NewsApiSourceReference;
+import com.vodafone.com.myapplication.objects.Source;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,8 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ProgressBar progressBar;
-
+    private static final  int DEFAULT_POSITION=-1;
+    private static final String KEY_POSITION="position";
     List<Article> allArticles=new ArrayList<Article>();
 
     @Override
@@ -35,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         progressBar = (ProgressBar) findViewById(R.id.activity_main_progress);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Call<NewsApiArticleReference> newsApiArticleReferenceCall= NewsApiServiceHandler.getNewsAPI().getArticle("bbcnews","top");
+        int position=getIntent().getIntExtra(KEY_POSITION,DEFAULT_POSITION);
+        Source source=CommonUsage.getAllNewsSources().get(position);
+        Call<NewsApiArticleReference> newsApiArticleReferenceCall= NewsApiServiceHandler.getNewsAPI().getArticle(source.getId(),source.getSortBysAvailable().get(0));
         newsApiArticleReferenceCall.enqueue(new Callback<NewsApiArticleReference>() {
             @Override
             public void onResponse(Call<NewsApiArticleReference> call, Response<NewsApiArticleReference> response)
@@ -59,25 +65,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Call<NewsApiSourceReference> newsApiSource=NewsApiServiceHandler.getNewsAPI().getSource();
-        newsApiSource.enqueue(new Callback<NewsApiSourceReference>() {
-            @Override
-            public void onResponse(Call<NewsApiSourceReference> call, Response<NewsApiSourceReference> response)
-            {
-                NewsApiSourceReference body=response.body();
-
-                Toast.makeText(MainActivity.this, "Response", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onFailure(Call<NewsApiSourceReference> call, Throwable t) {
-
-            }
-        });
 
 
 
+
+    }
+
+    public static void start(Context context, int position)
+    {
+        Intent intent=new Intent(context,MainActivity.class);
+        intent.putExtra("position",position);
+        context.startActivity(intent);
     }
 
 }

@@ -19,6 +19,17 @@ public class CommonUsage {
         AllNewsArticles = articles;
     }
 
+    public static List<Source> getAllNewsSources() {
+        return AllNewsSources;
+    }
+
+    public static void setAllNewsSources(List<Source> allNewsSources) {
+        AllNewsSources = allNewsSources;
+    }
+
+    private static List<Source> AllNewsSources;
+
+
 
 
 

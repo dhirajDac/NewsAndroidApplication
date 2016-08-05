@@ -14,7 +14,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.vodafone.com.myapplication.network.NewsApiServiceHandler;
+import com.vodafone.com.myapplication.objects.NewsApiArticleReference;
 import com.vodafone.com.myapplication.objects.NewsObject;
+
+import retrofit2.Call;
 
 /**
  * Created by admin on 8/4/2016.

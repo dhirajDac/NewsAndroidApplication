@@ -1,6 +1,5 @@
 package com.vodafone.com.myapplication;
 
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,11 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.vodafone.com.myapplication.R;
-import com.vodafone.com.myapplication.objects.NewsObject;
+import com.vodafone.com.myapplication.objects.Article;
 
 import java.util.List;
 
@@ -31,10 +28,16 @@ import java.util.List;
  */
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
-    List<NewsObject> newsItems;
+    //List<NewsObject> newsItems;
+    List<Article> newsArtictes;
 
-    public NewsAdapter(List<NewsObject> newsItems) {
+   /* public NewsAdapter(List<NewsObject> newsItems) {
         this.newsItems = newsItems;
+    }*/
+
+    public NewsAdapter(List<Article> allArticle)
+    {
+        this.newsArtictes=allArticle;
     }
 
 
@@ -47,12 +50,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public void onBindViewHolder(final NewsViewHolder holder, final int position) {
-           if (newsItems==null)
-               return;
-        NewsObject currentNewsObject=newsItems.get(position);
+           /*if (newsItems==null)
+               return;*/
+        if (newsArtictes==null)
+            return;
+        Article currentNewsObject=newsArtictes.get(position);
         holder.title.setText(currentNewsObject.getTitle());
-        holder.date.setText(currentNewsObject.getTime());
-        holder.desc.setText(currentNewsObject.getDesc());
+        holder.date.setText(currentNewsObject.getPublishedAt());
+        holder.desc.setText(currentNewsObject.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,12 +66,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
             }
         });
-        Glide.with(holder.newsImage.getContext()).load((currentNewsObject.getImageUrl())).into(holder.newsImage);
+        Glide.with(holder.newsImage.getContext()).load((currentNewsObject.getUrlToImage())).into(holder.newsImage);
     }
 
     @Override
     public int getItemCount() {
-        return (null == newsItems) ? 0 : newsItems.size();
+        return (null == newsArtictes) ? 0 : newsArtictes.size();
     }
 
     public static class NewsViewHolder extends RecyclerView.ViewHolder {

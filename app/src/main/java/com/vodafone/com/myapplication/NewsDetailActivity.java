@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,11 +12,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.vodafone.com.myapplication.network.NewsApiServiceHandler;
-import com.vodafone.com.myapplication.objects.NewsApiArticleReference;
-import com.vodafone.com.myapplication.objects.NewsObject;
-
-import retrofit2.Call;
+import com.vodafone.com.myapplication.objects.Article;
+import com.vodafone.com.myapplication.objects.CommonUsage;
 
 /**
  * Created by admin on 8/4/2016.
@@ -39,7 +34,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         progressBar=(ProgressBar)findViewById(R.id.news_detail_progress);
 
         int position=getIntent().getIntExtra(KEY_POSITION,DEFAULT_POSITION);
-        NewsObject selectedObject=NewsObject.getNewsItems().get(position);
+        Article selectedObject= CommonUsage.getArticles().get(position);
 
         loadWebViewForNewObject(selectedObject);
 
@@ -59,7 +54,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadWebViewForNewObject(NewsObject newsObject)
+    private void loadWebViewForNewObject(Article newsObject)
     {
         getSupportActionBar().setTitle(newsObject.getTitle());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -81,7 +76,7 @@ public class NewsDetailActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
-        webView.loadUrl(newsObject.getDetailsUrl());
+        webView.loadUrl(newsObject.getUrl());
     }
     public static void start(Context context, int position)
     {

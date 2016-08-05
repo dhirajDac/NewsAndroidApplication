@@ -1,6 +1,7 @@
 package com.vodafone.com.myapplication.network;
 
 import com.vodafone.com.myapplication.objects.NewsApiArticleReference;
+import com.vodafone.com.myapplication.objects.NewsApiSourceReference;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -31,5 +32,8 @@ public class NewsApiServiceHandler {
     {
         @GET("articles?apiKey="+API_KEY)
         Call<NewsApiArticleReference> getArticle(@Query("source") String source,@Query("sortBy") String sortBy);
+
+        @GET("sources")
+        Call<NewsApiSourceReference> getSource();
     }
 }
